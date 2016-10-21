@@ -245,14 +245,11 @@ class CiphertextMessage(Message):
 		bestShift = 0
 		highestWords = 0
 		realWords = Message.get_valid_words(self)
-		#is_word(word_list, 'bat') returns True
 		for counter in range(26):
 			count = 0
 			#check each word in the split string to determine if it's a word
-			#encrypting_dict = Message.build_shift_dict(self, counter)
 			message_text_encrypted = Message.apply_shift(self, counter)
 			result[counter] = message_text_encrypted
-			#print(message_text_encrypted)
 
 			words = message_text_encrypted.split(' ')
 			for word in words:
@@ -265,16 +262,30 @@ class CiphertextMessage(Message):
 		output = (bestShift, result[bestShift])
 		return output
 
+def decrypt_story():
+	"""
+	Now that you have all the pieces to the puzzle, please use them to decode the file story.txt. The file ps6.py
+	contains a helper function get_story_string() that returns the encrypted version of the story as a string.
+	Create a CiphertextMessage object using the story string and use decrypt_message to return the appropriate
+	shift value and unencrypted story string.
+
+	returns: string - story in plain text
+	"""
+
+	text = get_story_string()
+	ciphertext = CiphertextMessage(text)
+	return ciphertext.decrypt_message()
 
 #Example test case (PlaintextMessage)
-plaintext = PlaintextMessage('hello world how are you today', 2)
-print('Expected Output: jgnnq')
-print('Actually expected output: jgnnq yqtnf jqy ctg aqw vqfca')
-print('Actual Output:', plaintext.get_message_text_encrypted())
+#plaintext = PlaintextMessage('hello world how are you today', 2)
+#print('Expected Output: jgnnq')
+#print('Actually expected output: jgnnq yqtnf jqy ctg aqw vqfca')
+#print('Actual Output:', plaintext.get_message_text_encrypted())
 
 #Example test case (CiphertextMessage)
-ciphertext = CiphertextMessage('jgnnq yqtnf jqy ctg aqw vqfca')
-print('Expected Output:', (24, 'hello'))
-print('Actually expected output: (24, hello world how are you today)')
-print('Actual Output:', ciphertext.decrypt_message())
+#ciphertextO = CiphertextMessage('jgnnq yqtnf jqy ctg aqw vqfca')
+#print('Expected Output:', (24, 'hello'))
+#print('Actually expected output: (24, hello world how are you today)')
+#print('Actual Output:', ciphertextO.decrypt_message())
 
+print(decrypt_story())
